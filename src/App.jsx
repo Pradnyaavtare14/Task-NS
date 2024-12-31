@@ -1,5 +1,6 @@
-import  { useState } from 'react';
+import { useState } from 'react';
 import Navbar from './Components/Navbar';
+import './App.css'; 
 
 const dateArray = ['24-Apr-2024', '02-May-2024', '09-May-2024', '31-May-2024', '21-Jun-2024'];
 const strategyArray = [
@@ -53,33 +54,27 @@ const App = () => {
   }, {});
 
   return (
+    <div className="app-container">
+      <Navbar />
+     
+      <div className="toggle-buttons">
+        {['Bullish', 'Bearish', 'RangeBound', 'Volatile'].map((view) => (
+          <button
+            key={view}
+            onClick={() => handleToggleClick(view)}
+            className={`toggle-button ${selectedView === view ? 'active' : ''}`}
+          >
+            {view}
+          </button>
+        ))}
+      </div>
+
     
-    
-    <div className="p-6 font-sans bg-gradient-to-r from-blue-50 to-blue-100 min-h-screen">
-      <Navbar/>
-      {/* Toggle Buttons */}
-      <div className="flex flex-wrap justify-center mt-20 gap-4 mb-8">
-  {['Bullish', 'Bearish', 'RangeBound', 'Volatile'].map((view) => (
-    <button
-      key={view}
-      onClick={() => handleToggleClick(view)}
-      className={`px-6 py-3 rounded-full font-bold shadow-md transform transition-all duration-300 
-        ${selectedView === view ? 'bg-blue-600 text-white scale-105' : 'bg-white text-gray-800 hover:bg-gray-200'}
-        w-full sm:w-32 md:w-40 lg:w-48`} // Buttons resize based on screen size
-    >
-      {view}
-    </button>
-  ))}
-</div>
-
-
-
-      {/* Date Dropdown */}
-      <div className="mb-6 flex justify-center">
+      <div className="dropdown-container">
         <select
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
-          className="w-3/4 md:w-1/2 p-3 border font-bold border-gray-300 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="date-dropdown"
         >
           {dateArray.map((date) => (
             <option key={date} value={date}>
@@ -89,24 +84,23 @@ const App = () => {
         </select>
       </div>
 
-      {/* Strategy Cards */}
-      <div className="flex flex-col items-center gap-6 px-4">
+     
+      <div className="strategy-container">
   {strategies.length > 0 ? (
     Object.entries(strategyCount).map(([strategyName, count]) => (
-      <div
-        key={strategyName}
-        className="p-6 border border-gray-300 rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 w-full max-w-md"
-      >
-        <div className="flex items-center justify-between">
-          <div className="text-lg font-bold text-blue-700">{strategyName}</div>
-          <div className="text-sm text-gray-500">
+      <div key={strategyName} className="strategy-card">
+        <div className="strategy-info">
+          <div className="strategy-name">{strategyName}</div>
+          <div className="strategy-count">
             {count} {count === 1 ? 'Strategy' : 'Strategies'}
           </div>
         </div>
       </div>
     ))
   ) : (
-    <div className="text-center text-gray-500 col-span-full">No strategies available for {selectedDate}</div>
+    <div className="no-strategy">
+      No strategies available for {selectedDate}
+    </div>
   )}
 </div>
 

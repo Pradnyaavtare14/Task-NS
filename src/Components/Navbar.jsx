@@ -1,18 +1,28 @@
-// import { FaInfoCircle } from 'react-icons/fa'; // Icon for About
+import  { useState } from 'react';
+import './Navbar.css';
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <nav className="bg-blue-200 text-black p-4 mb-5 fixed top-0 left-0 w-full z-10 shadow-md">
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center">
-        <div className="text-xl font-bold  text-blue-700">
-          Nerve Solutions
+    <nav className="navbar">
+      <div className="navbar-container">
+        <div className="navbar-logo">Nerve Solutions</div>
+
+        <div className={`navbar-links ${isMenuOpen ? 'show' : ''}`}>
+          <a href="#home" className="navbar-link">Home</a>
+          <a href="#about" className="navbar-link">About</a>
+          <a href="#contact" className="navbar-link">Contact</a>
         </div>
-        <div className="space-x-6 flex items-center">
-          <a href="#home" className="hover:text-blue-700">Home</a>
-          <a href="#about" className="flex items-center hover:text-blue-700">
-             About
-          </a>
-          <a href="#contact" className="hover:text-blue-700">Contact</a>
+
+        <div className="hamburger" onClick={toggleMenu}>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </div>
     </nav>
